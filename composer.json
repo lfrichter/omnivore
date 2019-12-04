@@ -14,7 +14,7 @@
     "keywords": ["Laravel", "omnivore"],
     "require": {
         "illuminate/support": "~5",
-        "sapioweb/omnivore": "^1.0"
+        "sapioweb/omnivore": "^1.0.*@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "~7.0",
