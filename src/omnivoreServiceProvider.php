@@ -24,7 +24,7 @@ class omnivoreServiceProvider extends ServiceProvider
         }
 
         // Added routes
-        // include __DIR__.'/routes.php';
+//         include __DIR__.'/routes.php';
     }
 
     /**

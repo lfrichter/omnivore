@@ -2,10 +2,6 @@
 
 namespace lfrichter\omnivore;
 
-use Sapioweb\Omnivore\OmnivoreGeneral;
-use Sapioweb\Omnivore\OmnivoreTables;
-use Sapioweb\Omnivore\OmnivoreTickets;
-
 class omnivore
 {
     /**
