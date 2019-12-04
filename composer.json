@@ -1,7 +1,8 @@
 {
     "name": "lfrichter/omnivore",
     "description": "Laravel Facade to easy access Omnivore Api",
-    "license": "license",
+    "type": "library",
+    "license": "MIT",
     "authors": [
         {
             "name": "Luis Fernando Richter",
@@ -23,11 +24,13 @@
     },
     "autoload": {
         "psr-4": {
+            "App\\": "app/",
             "lfrichter\\omnivore\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
+            "App\\": "app/",
             "lfrichter\\omnivore\\Tests\\": "tests"
         }
     },
