@@ -1,6 +1,6 @@
 {
     "name": "lfrichter/omnivore",
-    "description": ":description",
+    "description": "Laravel Facade to Omnivore Api",
     "license": "license",
     "authors": [
         {
@@ -31,7 +31,7 @@
             "lfrichter\\omnivore\\Tests\\": "tests"
         }
     },
-    "minimum-stability": dev,
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "extra": {
         "laravel": {
