@@ -37,10 +37,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "lfrichter\\omnivore\\omnivoreServiceProvider"
+                "lfrichter\\omnivore\\OmnivoreServiceProvider"
             ],
             "aliases": {
-                "omnivore": "lfrichter\\omnivore\\Facades\\omnivore"
+                "omnivore": "lfrichter\\omnivore\\Facades\\Omnivore"
             }
         }
     }

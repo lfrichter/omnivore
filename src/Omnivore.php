@@ -2,7 +2,7 @@
 
 namespace lfrichter\omnivore;
 
-class omnivore
+class Omnivore
 {
     /**
      * @var OmnivoreGeneral

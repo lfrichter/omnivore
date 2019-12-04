@@ -4,7 +4,7 @@ namespace lfrichter\omnivore\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class omnivore extends Facade
+class Omnivore extends Facade
 {
     /**
      * Get the registered name of the component.

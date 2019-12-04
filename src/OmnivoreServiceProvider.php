@@ -4,7 +4,7 @@ namespace lfrichter\omnivore;
 
 use Illuminate\Support\ServiceProvider;
 
-class omnivoreServiceProvider extends ServiceProvider
+class OmnivoreServiceProvider extends ServiceProvider
 {
     /**
      * Perform post-registration booting of services.
@@ -16,15 +16,12 @@ class omnivoreServiceProvider extends ServiceProvider
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'lfrichter');
         // $this->loadViewsFrom(__DIR__.'/../resources/views', 'lfrichter');
         // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        // $this->loadRoutesFrom(__DIR__.'/routes.php');
+//         $this->loadRoutesFrom(__DIR__.'/routes.php');
 
         // Publishing is only necessary when using the CLI.
         if ($this->app->runningInConsole()) {
             $this->bootForConsole();
         }
-
-        // Added routes
-//         include __DIR__.'/routes.php';
     }
 
     /**
@@ -38,7 +35,7 @@ class omnivoreServiceProvider extends ServiceProvider
 
         // Register the service the package provides.
         $this->app->singleton('omnivore', function ($app) {
-            return new omnivore;
+            return new Omnivore;
         });
     }
 
