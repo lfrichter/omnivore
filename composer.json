@@ -1,12 +1,12 @@
 {
     "name": "lfrichter/omnivore",
-    "description": "Laravel Facade to Omnivore Api",
+    "description": "Laravel Facade to easy access Omnivore Api",
     "license": "license",
     "authors": [
         {
             "name": "Luis Fernando Richter",
             "email": "fernando.richter@gmail.com",
-            "homepage": ""
+            "homepage": "https://www.linkedin.com/in/lfrichter/"
         }
     ],
     "homepage": "https://github.com/lfrichter/omnivore",
