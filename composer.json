@@ -13,7 +13,7 @@
     "homepage": "https://github.com/lfrichter/omnivore",
     "keywords": ["Laravel", "omnivore"],
     "require": {
-        "illuminate/support": "~5",
+        "illuminate/support": "^5",
         "sapioweb/omnivore": "^1.0.*@dev"
     },
     "require-dev": {
