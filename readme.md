@@ -4,8 +4,7 @@
 [![Total Downloads][ico-downloads]][link-downloads]
 [![Build Status][ico-travis]][link-travis]
 
-[![php](https://img.shields.io/badge/php-7.3.12-777BB4.svg?logo=php&logoColor=white&style=for-the-badge)](http://php.net/) [ ![Laravel](https://img.shields.io/badge/Laravel-6.6.1-E74430.svg?logo=laravel&logoColor=white&style=for-the-badge)](https://laravel.com/)                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-
+[![php](https://img.shields.io/badge/php-7.3.12-777BB4.svg?logo=php&logoColor=white&style=for-the-badge)](http://php.net/) [ ![Laravel](https://img.shields.io/badge/Laravel-6.6.1-E74430.svg?logo=laravel&logoColor=white&style=for-the-badge)](https://laravel.com/)
 
 ## Installation
 
@@ -27,7 +26,7 @@ lfrichter\omnivore\omnivoreServiceProvider::class,
 
 ## Usage
 
-Place these values into your `.ENV`, after that you can access through your browser this route to test `/omnivore_test`.
+Place these values into your `.ENV`
 ```
 OMNIVORE_API_URL
 OMNIVORE_API_KEY
