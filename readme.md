@@ -33,6 +33,9 @@ ES_FROM=
 ES_SIZE=
 ```
 
+
+### Tickets functions
+
 Interact with tickets of claimed locations from the POS.
 
 #### List tickets for location
@@ -46,6 +49,9 @@ $ticketList = Omnivore::tickets()->ticketList($locationId);
 ```php
 $ticketOpen = Omnivore::tickets()->ticketOpen($locationId, $content);
 ```
+
+#####  Omnivore documentation
+
 To open a new ticket you'll need the following:
 
 - a valid employee id for the Location — we'll use EMPLOYEEID
@@ -53,7 +59,7 @@ To open a new ticket you'll need the following:
 - a valid revenue center id for the Location — we'll use REVENUECENTERID
 - a valid table id for the Location — we'll use TABLEID
 
-##### Sample JSON object to be send
+###### Sample JSON object to be send
 
 ```
 {
@@ -66,13 +72,13 @@ To open a new ticket you'll need the following:
     "auto_send": true
 }
 ```
-You should get a 201 CREATED HTTP response to let you know your ticket has been added. You'll also get the ticket id field in the response which you need to add menu items or make payments.
+You should get a **201** CREATED HTTP response to let you know your ticket has been added. You'll also get the ticket id field in the response which you need to add menu items or make payments.
 
-##### Don't Send Items to the Kitchen
+###### Don't Send Items to the Kitchen
 
 Did you notice the auto_send field we used when we opened the ticket? It determines whether new menu items are sent to the kitchen immediately, or if they're held until the ticket is paid. By default it's true which means as soon as you add a menu item to the ticket it will be made by the restaurant. If you set it to false nothing will be made until the ticket is paid in full and closed.
 
----
+
 #### Retrieve data for a specific ticket
 
 ```php
@@ -117,9 +123,12 @@ You'll get a list of menu items each with two important pieces of information:
 ```php
 $ticketItemAdd = Omnivore::tickets()->ticketItemAdd($locationId, $ticketId, $content);
 ```
-For this example pick an item that looks tasty and note its `id` then choose an arbitrary `price_levels` element and note its `id` as well. We'll refer to them as **MENUITEMID** and **PRICELEVELID** respectively. Now, let's place an order on the ticket from earlier. We'll use **:ticket_id** where you would use the `id` you got back when the ticket was created.
 
-##### Sample JSON object to be send
+#####  Omnivore documentation
+
+For this example pick an item that looks tasty and note its `id` then choose an arbitrary `price_levels` element and note its `id` as well. We'll refer to them as **MENUITEMID** and **PRICELEVELID** respectively. Now, let's place an order on the ticket from earlier. 
+
+###### Sample JSON object to be send
 
 ```
 {
@@ -131,11 +140,11 @@ For this example pick an item that looks tasty and note its `id` then choose an 
 }
 ```
 
-##### Making an Order with Modifiers
+###### Making an Order with Modifiers
 
 Let's say you've picked out a menu item, looked up its modifier groups, and figured out which modifiers you want to apply. You've noted all the modifier id values and the id for the appropriate price_level on each one. That's a lot, but now you're ready to place a personalized order.
 
-##### Sample JSON object to be send
+###### Sample JSON object to be send
 
 ```
 {
@@ -160,7 +169,6 @@ Let's say you've picked out a menu item, looked up its modifier groups, and figu
 }
 ```
 
----
 #### Retrieve an item from a ticket
 
 ```php
@@ -294,11 +302,10 @@ $paymentCash = Omnivore::tickets()->paymentCash($locationId, $ticketId, $content
 
 
 ---
-# Class OmnivoreTables
+### Tables functions
 
 Interact with tables of claimed locations from the POS.
 
-### Available Functions
 
 #### List tables of claimed locations
 
@@ -314,11 +321,10 @@ $tableRetrieve = Omnivore::tables()->tableRetrieve($locationId, $tableId)
 
 
 ---
-# Class OmnivoreGeneral
+### General functions
 
 Interact with general labeled actions of claimed locations from the POS.
 
-### Available Functions
 
 #### List all locations claimed.
 
