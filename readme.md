@@ -33,245 +33,419 @@ ES_FROM=
 ES_SIZE=
 ```
 
-
-
 Interact with tickets of claimed locations from the POS.
 
-List tickets for location
+#### List tickets for location
+
 ```php
 $ticketList = Omnivore::tickets()->ticketList($locationId);
 ```
 
-Open a new ticket
+#### Open a new ticket
+
 ```php
 $ticketOpen = Omnivore::tickets()->ticketOpen($locationId, $content);
 ```
+To open a new ticket you'll need the following:
 
-Retrieve data for a specific ticket
+- a valid employee id for the Location — we'll use EMPLOYEEID
+- a valid order type id for the Location — we'll use ORDERTYPEID
+- a valid revenue center id for the Location — we'll use REVENUECENTERID
+- a valid table id for the Location — we'll use TABLEID
+
+##### Sample JSON object to be send
+
+```
+{
+    "employee": "EMPLOYEEID",
+    "order_type": "ORDERTYPEID",
+    "revenue_center": "REVENUECENTERID",
+    "table": "TABLEID",
+    "guest_count": 1,
+    "name": "New Ticket",
+    "auto_send": true
+}
+```
+You should get a 201 CREATED HTTP response to let you know your ticket has been added. You'll also get the ticket id field in the response which you need to add menu items or make payments.
+
+##### Don't Send Items to the Kitchen
+
+Did you notice the auto_send field we used when we opened the ticket? It determines whether new menu items are sent to the kitchen immediately, or if they're held until the ticket is paid. By default it's true which means as soon as you add a menu item to the ticket it will be made by the restaurant. If you set it to false nothing will be made until the ticket is paid in full and closed.
+
+---
+#### Retrieve data for a specific ticket
+
 ```php
 $ticketRetrieve = Omnivore::tickets()->ticketRetrieve($locationId, $ticketId);
 ```
 
-Void a locations ticket
+#### Void a locations ticket
+
 ```php
 $ticketVoid = Omnivore::tickets()->ticketVoid($locationId, $ticketId);
 ```
 
-List discounts for a ticket
+#### List discounts for a ticket
+
 ```php
 $ticketDiscountList = Omnivore::tickets()->ticketDiscountList($locationId, $ticketId);
 ```
 
-Apply a discount to a ticket
+#### Apply a discount to a ticket
+
 ```php
 $ticketDiscountApply = Omnivore::tickets()->ticketDiscountApply($locationId, $ticketId, $discount, $value);
 ```
 
-Retrieve a discount that was applied to a ticket
+#### Retrieve a discount that was applied to a ticket
+
 ```php
 $ticketDiscountRetrieve = Omnivore::tickets()->ticketDiscountRetrieve($locationId, $ticketId, $ticketDiscountId);
 ```
-List items on a ticket
+#### List items on a ticket
+
 ```php
 $ticketItemList = Omnivore::tickets()->ticketItemList($locationId, $ticketId);
 ```
+You'll get a list of menu items each with two important pieces of information:
 
-Add an item to a ticket
+- the menu item `id`
+- the list of acceptable `price_levels` for the item
+
+#### Add an item to a ticket
+
 ```php
 $ticketItemAdd = Omnivore::tickets()->ticketItemAdd($locationId, $ticketId, $content);
 ```
+For this example pick an item that looks tasty and note its `id` then choose an arbitrary `price_levels` element and note its `id` as well. We'll refer to them as **MENUITEMID** and **PRICELEVELID** respectively. Now, let's place an order on the ticket from earlier. We'll use **:ticket_id** where you would use the `id` you got back when the ticket was created.
 
-Retrieve an item from a ticket
+##### Sample JSON object to be send
+
+```
+{
+    "menu_item": "MENUITEMID",
+    "quantity": 1,
+    "price_level": "PRICELEVELID",
+    "comment": "Get in my belly!",
+    "modifiers": []
+}
+```
+
+##### Making an Order with Modifiers
+
+Let's say you've picked out a menu item, looked up its modifier groups, and figured out which modifiers you want to apply. You've noted all the modifier id values and the id for the appropriate price_level on each one. That's a lot, but now you're ready to place a personalized order.
+
+##### Sample JSON object to be send
+
+```
+{
+    "menu_item": "MENUITEMID",
+    "quantity": 1,
+    "price_level": "PRICELEVELID",
+    "comment": "Get in my belly!",
+    "modifiers": [
+        {
+            "modifier": "MODIFIERID",
+            "quantity": 1,
+            "price_level": "PRICELEVELID",
+            "comment": "on the side"
+        },
+        {
+            "modifier": "MODIFIERID",
+            "quantity": 1,
+            "price_level": "PRICELEVELID",
+            "comment": "extra"
+        }
+    ]
+}
+```
+
+---
+#### Retrieve an item from a ticket
+
 ```php
 $ticketItemRetrieve = Omnivore::tickets()->ticketItemRetrieve($locationId, $ticketId, $ticketItemId);
 ```
 
-Void an item from a ticket
+#### Void an item from a ticket
+
 ```php
 $ticketItemVoid = Omnivore::tickets()->ticketItemVoid($locationId, $ticketId, $ticketItemId)
 ```
 
-List modifiers form a ticket
+#### List modifiers form a ticket
+
 ```php
 $ticketItemModifierList = Omnivore::tickets()->ticketItemModifierList($locationId, $ticketId, $ticketItemId)
 ```
 
-Retrieve a modifier form a ticket
+#### Retrieve a modifier form a ticket
+
 ```php
 $ticketItemModifierRetrieve = Omnivore::tickets()->ticketItemModifierRetrieve($locationId, $ticketId, $ticketItemId, $ticketItemModifierId)
 ```
 
-List dicounts on a ticket
+#### List dicounts on a ticket
+
 ```php
 $ticketItemDiscountList = Omnivore::tickets()->ticketItemDiscountList($locationId, $ticketId, $ticketItemId)
 ```
 
-Retrieve a discount from a ticket
+#### Retrieve a discount from a ticket
+
 ```php
 $ticketItemDiscountRetrieve = Omnivore::tickets()->ticketItemDiscountRetrieve($locationId, $ticketId, $ticketItemId, $ticketItemDiscountId)
 ```
 
-List payments
+#### List payments
+
 ```php
 $paymentList = Omnivore::tickets()->paymentList($locationId, $ticketId)
 ```
 
-Retrieve a payment
+#### Retrieve a payment
+
 ```php
 $paymentRetrieve = Omnivore::tickets()->paymentRetrieve($locationId, $ticketId, $paymentId)
 ```
 
-Make a payment where a card is not present
+#### Make a payment where a card is not present
+
 ```php
 $paymentCardNotPresent = Omnivore::tickets()->paymentCardNotPresent($locationId, $ticketId, $content)
 ```
+##### Sample JSON object to be send
 
-Make a payment where a card is present
+```
+{
+    "type": "card_not_present",
+    "amount": 500,
+    "tip": 100,
+    "card_info": {
+        "exp_month": 1,
+        "exp_year": 2025,
+        "cvc2": 123,
+        "number": "4111111111111111"
+    }
+}
+```
+
+#### Make a payment where a card is present
+
 ```php
 $paymentCardPresent = Omnivore::tickets()->paymentCardPresent($locationId, $ticketId, $content)
 ```
 
-Make a payment with a 3rd party
+##### Sample JSON object to be send
+
+```
+{
+    "type": "card_present",
+    "amount": 500,
+    "tip": 100,
+    "card_info": {
+        "data": "%B4111111111111111^SCHMOE /JOE^180710100695000000?"
+    }
+}
+```
+
+#### Make a payment with a 3rd party
+
 ```php
 $payment3rdParty = Omnivore::tickets()->payment3rdParty($locationId, $ticketId, $content)
 ```
 
-Make a payment with a card
+##### Sample JSON object to be send
+
+```
+{
+    "type": "3rd_party",
+    "amount": 500,
+    "tip": 100,
+    "tender_type": TENDERTYPEID,
+    "payment_source": "put your transaction reference here"
+}
+```
+
+#### Make a payment with a card
+
 ```php
 $paymentGiftCard = Omnivore::tickets()->paymentGiftCard($locationId, $ticketId, $content)
 ```
 
-Make a payment with cash
+##### Sample JSON object to be send
+
+```
+{
+    "type": "gift_card",
+    "amount": 500,
+    "tip": 100,
+    "card_info": {
+        "number": "1111111111111111"
+    }
+}
+```
+
+#### Make a payment with cash
+
 ```php
 $paymentCash = Omnivore::tickets()->paymentCash($locationId, $ticketId, $content)
 ```
 
+
+---
 # Class OmnivoreTables
 
 Interact with tables of claimed locations from the POS.
 
 ### Available Functions
 
-List tables of claimed locations
+#### List tables of claimed locations
+
 ```php
 $tableList = Omnivore::tables()->tableList($locationId)
 ```
 
-Retrieve data for a specific table
+#### Retrieve data for a specific table
+
 ```php
 $tableRetrieve = Omnivore::tables()->tableRetrieve($locationId, $tableId)
 ```
 
+
+---
 # Class OmnivoreGeneral
 
 Interact with general labeled actions of claimed locations from the POS.
 
 ### Available Functions
 
-List all locations claimed.
+#### List all locations claimed.
+
 ```php
 $locations = Omnivore::general()->locationList();
 ```
 
-Retrieve information about a location
+#### Retrieve information about a location
+
 ```php
 $locationRetrieve = Omnivore::general()->locationRetrieve($locationId)
 ```
 
-List employees of a location
+#### List employees of a location
+
 ```php
 $employeeList = Omnivore::general()->employeeList($locationId)
 ```
 
-Retrieve data of a specific location
+#### Retrieve data of a specific location
+
 ```php
 $employeeRetrieve = Omnivore::general()->employeeRetrieve($locationId, $employeeId)
 ```
 
-List location types
+#### List location types (Order Types)
+
 ```php
 $orderTypeList = Omnivore::general()->orderTypeList($locationId)
 ```
 
-Retrieve a locations type
+#### Retrieve a locations type
+
 ```php
 $orderTypeRetrieve = Omnivore::general()->orderTypeRetrieve($locationId, $orderTypeId)
 ```
 
-List the types of tender the location accepts
+#### List the types of tender the location accepts
+
 ```php
 $tenderTypeList = Omnivore::general()->tenderTypeList($locationId)
 ```
 
-Retrive the tender type
+#### Retrive the tender type
+
 ```php
 $tenderTypeRetrieve = Omnivore::general()->tenderTypeRetrieve($locationId, $tenderTypeId)
 ```
 
-List a locations revenue centers
+#### List a locations revenue centers
+
 ```php
 $revenueCenterList = Omnivore::general()->revenueCenterList($locationId)
 ```
 
-Retrieve information of a payment center
+#### Retrieve information of a payment center
+
 ```php
 $revenueCenterRetrieve = Omnivore::general()->revenueCenterRetrieve($locationId, $revenueCenterId)
 ```
 
-List the discounts of a location
+#### List the discounts of a location
+
 ```php
 $discountList = Omnivore::general()->discountList($locationId)
 ```
 
-Retrieve the discount
+#### Retrieve the discount
+
 ```php
 $discountRetrieve = Omnivore::general()->discountRetrieve($locationId, $discountId)
 ```
 
-Grab the menu from POS
+#### Grab the menu from POS
+
 ```php
 $menu = Omnivore::general()->menu($locationId)
 ```
 
-List the menu categories
+#### List the menu categories
+
 ```php
 $categoryList = Omnivore::general()->categoryList($locationId)
 ```
 
-Retrieve a category
+#### Retrieve a category
+
 ```php
 $categoryRetrieve = Omnivore::general()->categoryRetrieve($locationId, $categoryId)
 ```
 
-List items in a menu
+#### List items in a menu
+
 ```php
 $menuItemList = Omnivore::general()->menuItemList($locationId)
 ```
 
-Retrieve a menu item
+#### Retrieve a menu item
+
 ```php
 $menuItemRetrieve = Omnivore::general()->menuItemRetrieve($locationId, $menuItemId)
 ```
 
-List location modifiers 
+#### List location modifiers 
+
 ```php
 $modifierList = Omnivore::general()->modifierList($locationId)
 ```
 
-Retrieve a modifier
+#### Retrieve a modifier
+
 ```php
 $modifierRetrieve = Omnivore::general()->modifierRetrieve($locationId, $modifierId)
 ```
 
-List modifier groups
+#### List modifier groups
+
 ```php
 $modifierGroupList = Omnivore::general()->modifierGroupList($locationId, $menuItemId)
 ```
 
-Retrieve a modifier group
+#### Retrieve a modifier group
+
 ```php
 $modifierGroupRetrieve = Omnivore::general()->modifierGroupRetrieve($locationId, $menuItemId, $modifierGroupId)
 ```
+
 
 
 ## Change log
@@ -312,3 +486,4 @@ license. Please see the [license file](license.md) for more information.
 [link-styleci]: https://styleci.io/repos/12345678
 [link-author]: https://github.com/lfrichter
 [link-contributors]: ../../contributors
+
