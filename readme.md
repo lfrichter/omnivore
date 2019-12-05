@@ -294,8 +294,8 @@ If you discover any security related issues, please email author email instead o
 
 ## Credits
 
-- [Luis Fernando Richter][https://github.com/lfrichter]
-- [Andreas Beasley][https://github.com/SapioBeasley]
+- [Luis Fernando Richter](https://github.com/lfrichter)
+- This package was based in [Onivore](https://github.com/SapioBeasley/omnivore) from [Andreas Beasley](https://github.com/SapioBeasley)
 
 ## License
 
